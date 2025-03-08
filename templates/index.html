@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Ranking System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('static/drops-6392473_640.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
+        }
+        h1 {
+            color: #ffcc00;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: none;
+            background: #32CD32;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #228B22;
+            transform: scale(1.05);
+        }
+        .result {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Resume Ranking System</h1>
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <label for="job_desc">Job Description:</label>
+            <textarea name="job_desc_embedding" id="job_desc" rows="4" required placeholder="Enter job description..."></textarea>
+
+            <label for="resumes">Upload Resumes (DOCX, ZIP):</label>
+            <input type="file" name="resumes" id="resumes" accept=".docx,.zip" multiple required>
+
+            <label for="top_n">Number of Top Resumes:</label>
+            <input type="number" name="top_n" id="top_n" min="1" required placeholder="Enter a number (e.g., 5)">
+
+            <button type="submit">Rank Resumes</button>
+        </form>
+        
+        <div class="result">
+            {% if ranked_resumes %}
+                <h2>Top Ranked Resumes</h2>
+                <ul>
+                    {% for resume, score in ranked_resumes %}
+                        <li>{{ resume }} - Score: {{ '%.2f'|format(score) }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

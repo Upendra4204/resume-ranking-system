@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Ranking</title>
+</head>
+<body>
+    <h2>AI Resume Screening</h2>
+    
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="job_desc">Enter Job Description:</label><br>
+        <textarea id="job_desc" name="job_desc" rows="5" cols="40">{{ job_description }}</textarea><br><br>
+        
+        <label for="resumes">Upload Resumes (ZIP or DOCX):</label><br>
+        <input type="file" id="resumes" name="resumes" multiple><br><br>
+        
+        <label for="top_n">Select Number of Top Resumes:</label>
+        <input type="number" id="top_n" name="top_n" min="1" value="5"><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+
+    <form action="/reset_jd" method="post">
+        <button type="submit">Check with New JD</button>
+    </form>
+
+    {% if ranked_resumes %}
+        <h3>Ranked Resumes</h3>
+        <ul>
+            {% for resume, score in ranked_resumes %}
+                <li>{{ resume }} - Similarity: {{ score|round(3) }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

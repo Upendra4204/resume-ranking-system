@@ -1,0 +1,3 @@
+UPLOAD_FOLDER = 'uploads/'
+DEBUG_MODE = True
+TOP_N_DEFAULT = 5  
