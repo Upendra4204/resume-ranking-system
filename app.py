@@ -13,7 +13,7 @@ def index():
     if request.method == 'GET':
         return render_template('index.html')  
 
-    job_description = request.form['job_desc_embedding']
+    job_description = request.form['job_desc_embedding'] 
     top_n = int(request.form.get('top_n', TOP_N_DEFAULT))
     uploaded_files = request.files.getlist('resumes')
 
@@ -28,4 +28,6 @@ def index():
     return render_template('index.html', ranked_resumes=ranked_resumes, total_resumes=len(filenames), job_description=job_description)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 7860))  # Use PORT from HF or default to 7860
+    app.run(host="0.0.0.0", port=port)
+
